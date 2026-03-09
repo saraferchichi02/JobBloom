@@ -1,14 +1,21 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './index.css'
+
 function Hero() {
+  const navigate = useNavigate()
+
+  const handleBuildCV = () => {
+    navigate('/cv')
+  }
+
   return (
     <div className="hero-section">
         <p>✨ Your dream internship awaits</p>
         <h1>Launch Your Career with <br />Amazing Internships</h1>
         <h5>Connect with top companies, build your professional CV, and take <br /> the first step towards an incredible career journey.</h5>
     <div className='hero-btn'>
-    <button>Browse internships</button>
-    <button>Build your CV</button>
+    <button onClick={handleBuildCV}>Build your CV</button>
     </div>
     <div className='stats-container'>
          <div class="stat-item">

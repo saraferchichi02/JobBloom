@@ -45,15 +45,6 @@ const Footer = () => {
             <li><a href="#">Terms</a></li>
           </ul>
         </div>
-
-        <div className="newsletter">
-          <h4>Stay Updated</h4>
-          <p>Get the latest internship opportunities</p>
-          <div className="newsletter-form">
-            <input type="email" placeholder="Enter your email" />
-            <button>Subscribe</button>
-          </div>
-        </div>
       </div>
 
       <div className="footer-bottom">
