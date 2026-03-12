@@ -58,7 +58,7 @@ const Login = () => {
 
     try {
       await authService.login(formData.email, formData.password);
-      navigate('/dashboard');
+      navigate('/job-board');
     } catch (error) {
       setErrors({ submit: error.message });
     } finally {
