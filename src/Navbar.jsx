@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import authService from './services/authService'
 import './index.css'
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    setIsLoggedIn(authService.isAuthenticated())
+  }, [location])
 
   const handleCVClick = () => {
     navigate('/cv')
@@ -21,6 +28,18 @@ function Navbar() {
     setMenuOpen(false)
   }
 
+  const handleDashboardClick = () => {
+    navigate('/dashboard')
+    setMenuOpen(false)
+  }
+
+  const handleLogout = () => {
+    authService.logout()
+    setIsLoggedIn(false)
+    navigate('/login')
+    setMenuOpen(false)
+  }
+
   return (
     <div className='nav'>
         <h1 onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>JobBloom</h1>
@@ -30,13 +49,26 @@ function Navbar() {
           <span className={menuOpen ? 'bar open' : 'bar'}></span>
         </button>
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <div>
-              <button onClick={handleSignUpClick}>Sign Up</button>
-              <button onClick={handleLoginClick}>Login</button>
-          </div>
-          <div id='btn-CV'>
-              <button onClick={handleCVClick}>create your CV</button>
-          </div>
+          {isLoggedIn ? (
+            <>
+              <div id='btn-CV'>
+                <button onClick={handleCVClick}>create your CV</button>
+              </div>
+              <div className='profile-icon' onClick={handleDashboardClick} title='My Profile'>
+                {authService.getCurrentUser()?.name?.charAt(0).toUpperCase() || '?'}
+              </div>
+            </>
+          ) : (
+            <>
+              <div>
+                <button onClick={handleSignUpClick}>Sign Up</button>
+                <button onClick={handleLoginClick}>Login</button>
+              </div>
+              <div id='btn-CV'>
+                <button onClick={handleCVClick}>create your CV</button>
+              </div>
+            </>
+          )}
         </div>
     </div>
     

@@ -77,7 +77,7 @@ const SignUp = () => {
 
     try {
       await authService.register(formData.fullName, formData.email, formData.password);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       setErrors({ submit: error.message });
     } finally {

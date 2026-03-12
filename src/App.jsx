@@ -9,6 +9,7 @@ import Login from './Login'
 import SignUp from './SignUp'
 import JOBS from './JOBS'
 import PostJob from './PostJob'
+import Dashboard from './Dashboard'
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/post-job" element={<PostJob />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   )
