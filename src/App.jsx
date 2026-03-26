@@ -9,7 +9,6 @@ import Login from './Login'
 import SignUp from './SignUp'
 import JOBS from './JOBS'
 import PostJob from './PostJob'
-import Dashboard from './Dashboard'
 import JobBoard from './JobBoard'
 
 function App() {
@@ -31,7 +30,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/post-job" element={<PostJob />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/job-board" element={<JobBoard />} />
       </Routes>
     </Router>

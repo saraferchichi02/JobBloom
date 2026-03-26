@@ -28,11 +28,6 @@ function Navbar() {
     setMenuOpen(false)
   }
 
-  const handleDashboardClick = () => {
-    navigate('/dashboard')
-    setMenuOpen(false)
-  }
-
   const handleLogout = () => {
     authService.logout()
     setIsLoggedIn(false)
@@ -49,26 +44,11 @@ function Navbar() {
           <span className={menuOpen ? 'bar open' : 'bar'}></span>
         </button>
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          {isLoggedIn ? (
-            <>
-              <div id='btn-CV'>
-                <button onClick={handleCVClick}>create your CV</button>
-              </div>
-              <div className='profile-icon' onClick={handleDashboardClick} title='My Profile'>
-                {authService.getCurrentUser()?.name?.charAt(0).toUpperCase() || '?'}
-              </div>
-            </>
-          ) : (
-            <>
-              <div>
-                <button onClick={handleSignUpClick}>Sign Up</button>
-                <button onClick={handleLoginClick}>Login</button>
-              </div>
-              <div id='btn-CV'>
-                <button onClick={handleCVClick}>create your CV</button>
-              </div>
-            </>
-          )}
+          <div id='btn-CV'>
+            <button onClick={handleCVClick}>create your CV</button>
+            <button onClick={handleSignUpClick}>Sign Up</button>
+            <button onClick={handleLoginClick}>Login</button>
+          </div>
         </div>
     </div>
     
