@@ -1,0 +1,76 @@
+.job-details-container {
+  padding: 40px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 70vh;
+}
+
+.job-details-card {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.job-details-card h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.company-name {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.job-badges {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.job-description, .job-requirements {
+  margin-bottom: 30px;
+}
+
+.job-description h4, .job-requirements h4 {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 8px;
+}
+
+.job-description p, .job-requirements p {
+  color: #555;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.apply-btn-large {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.apply-btn-large:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.apply-btn-large.applied, .apply-btn-large:disabled {
+  background-color: #28a745;
+  cursor: not-allowed;
+  transform: none;
+}

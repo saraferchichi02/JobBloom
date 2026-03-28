@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import authService from './services/authService';
 import './JOBS.css';
 
 function JOBS() {
+  const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -61,10 +64,12 @@ function JOBS() {
     setFilteredJobs(filtered);
   }, [searchTerm, selectedCategory, jobs]);
 
-  const handleApplyJob = (jobId) => {
-    console.log('Applied to job:', jobId);
-    alert('Application submitted successfully!');
-    // Add logic to submit application to backend
+  const handleDetailsClick = (jobId) => {
+    if (!authService.isAuthenticated()) {
+      navigate('/login');
+    } else {
+      navigate(`/job/${jobId}`);
+    }
   };
 
   const handlePostJobInputChange = (e) => {
@@ -134,6 +139,9 @@ function JOBS() {
     return <div className="jobs-container"><p>Loading jobs...</p></div>;
   }
 
+  const currentUser = authService.getCurrentUser();
+  const showPostJobButton = !currentUser || currentUser.role === 'employer';
+
   return (
     <div className="jobs-container">
       <div className="jobs-header">
@@ -142,12 +150,20 @@ function JOBS() {
             <h1>Find Your Next Job</h1>
             <p>Browse available job opportunities</p>
           </div>
-          <button 
-            className="post-job-btn-header" 
-            onClick={() => setShowPostJobForm(!showPostJobForm)}
-          >
-            {showPostJobForm ? 'Cancel' : '+ Post a Job'}
-          </button>
+          {showPostJobButton && (
+            <button 
+              className="post-job-btn-header" 
+              onClick={() => {
+                if (!currentUser) {
+                  navigate('/login');
+                } else {
+                  navigate('/post-job');
+                }
+              }}
+            >
+              + Post a Job
+            </button>
+          )}
         </div>
 
         {showPostJobForm && (
@@ -305,9 +321,9 @@ function JOBS() {
 
               <button
                 className="apply-btn"
-                onClick={() => handleApplyJob(job._id)}
+                onClick={() => handleDetailsClick(job._id)}
               >
-                Apply Now
+                More details
               </button>
             </div>
           ))

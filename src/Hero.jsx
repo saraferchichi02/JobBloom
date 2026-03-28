@@ -1,12 +1,17 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import authService from './services/authService'
 import './index.css'
 
 function Hero() {
   const navigate = useNavigate()
 
   const handlePostJob = () => {
-    navigate('/post-job')
+    if (!authService.isAuthenticated()) {
+      navigate('/login')
+    } else {
+      navigate('/post-job')
+    }
   }
 
   return (

@@ -36,11 +36,19 @@ function PostJob() {
     try {
       setLoading(true);
       setMessage('');
+      
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setMessage('You must be logged in as an employer to post a job.');
+        setLoading(false);
+        return;
+      }
 
       const response = await fetch('http://localhost:5000/api/jobs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });

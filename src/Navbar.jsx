@@ -6,11 +6,18 @@ import './index.css'
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userRole, setUserRole] = useState(null)
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
     setIsLoggedIn(authService.isAuthenticated())
+    const user = authService.getCurrentUser()
+    if (user) {
+      setUserRole(user.role)
+    } else {
+      setUserRole(null)
+    }
   }, [location])
 
   const handleCVClick = () => {
@@ -45,9 +52,39 @@ function Navbar() {
         </button>
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
           <div id='btn-CV'>
-            <button onClick={handleCVClick}>create your CV</button>
-            <button onClick={handleSignUpClick}>Sign Up</button>
-            <button onClick={handleLoginClick}>Login</button>
+            {isLoggedIn ? (
+              <>
+                {/* Admin Menu */}
+                {userRole === 'admin' && (
+                  <button onClick={() => navigate('/admin-dashboard')}>Admin Dashboard</button>
+                )}
+
+                {/* Employer Menu */}
+                {userRole === 'employer' && (
+                  <>
+                    <button onClick={() => navigate('/jobs')}>JOBS</button>
+                    <button onClick={() => navigate('/post-job')}>Post a Job</button>
+                    <button onClick={() => navigate('/employer-dashboard')}>My Postings</button>
+                  </>
+                )}
+
+                {/* Job Seeker Menu */}
+                {(userRole === 'seeker' || !userRole) && (
+                  <>
+                    <button onClick={() => navigate('/jobs')}>JOBS</button>
+                    <button onClick={() => navigate('/seeker-dashboard')}>My Applications</button>
+                    <button onClick={handleCVClick}>My CV</button>
+                  </>
+                )}
+                
+                <button onClick={handleLogout} className="logout-btn" style={{ backgroundColor: '#dc3545' }}>Logout</button>
+              </>
+            ) : (
+              <>
+                <button onClick={handleSignUpClick}>Sign Up</button>
+                <button onClick={handleLoginClick}>Login</button>
+              </>
+            )}
           </div>
         </div>
     </div>

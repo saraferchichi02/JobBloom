@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import authService from './services/authService';
 import './CV.css';
 
 const CV = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
   const [cvData, setCVData] = useState({
     personalInfo: {
       fullName: '',
@@ -49,6 +52,60 @@ const CV = () => {
       },
     ],
   });
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!authService.isAuthenticated()) {
+        navigate('/login');
+        return;
+      }
+      try {
+        const profile = await authService.getProfile();
+        if (profile.cv) {
+          setCVData(prev => ({
+            ...prev,
+            ...profile.cv,
+            personalInfo: {
+              ...prev.personalInfo,
+              ...(profile.cv.personalInfo || {})
+            },
+            experience: profile.cv.experience || prev.experience,
+            education: profile.cv.education || prev.education,
+            skills: profile.cv.skills || prev.skills,
+            certifications: profile.cv.certifications || prev.certifications,
+          }));
+        } else {
+          // Pre-fill email and name from user object
+          setCVData(prev => ({
+            ...prev,
+            personalInfo: {
+              ...prev.personalInfo,
+              fullName: profile.name || '',
+              email: profile.email || '',
+            }
+          }));
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchProfile();
+  }, [navigate]);
+
+  const saveProfile = async () => {
+    setLoading(true);
+    setSuccessMsg('');
+    try {
+      await authService.updateProfile({ cv: cvData });
+      setSuccessMsg('Profile saved successfully!');
+      setTimeout(() => setSuccessMsg(''), 3000);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to save profile');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePersonalInfoChange = (e) => {
     const { name, value } = e.target;
@@ -215,10 +272,17 @@ const CV = () => {
           <button className="back-btn" onClick={() => navigate('/')}>← Back</button>
           <h1>Create Your CV</h1>
         </div>
-        <button className="download-btn" onClick={downloadPDF}>
-          Download PDF
-        </button>
+        <div className="cv-header-actions" style={{ display: 'flex', gap: '10px' }}>
+          <button className="download-btn" onClick={saveProfile} disabled={loading} style={{ backgroundColor: '#0ea5e9' }}>
+            {loading ? 'Saving...' : 'Save Profile'}
+          </button>
+          <button className="download-btn" onClick={downloadPDF} style={{ backgroundColor: '#10b981' }}>
+            Download PDF
+          </button>
+        </div>
       </div>
+      
+      {successMsg && <div className="success-message">{successMsg}</div>}
 
       {/* Personal Information Section */}
       <section className="cv-section">
@@ -228,7 +292,7 @@ const CV = () => {
           <input
             type="text"
             name="fullName"
-            value={cvData.personalInfo.fullName}
+            value={cvData.personalInfo?.fullName || ''}
             onChange={handlePersonalInfoChange}
             placeholder="Enter your full name"
           />
@@ -238,7 +302,7 @@ const CV = () => {
           <input
             type="email"
             name="email"
-            value={cvData.personalInfo.email}
+            value={cvData.personalInfo?.email || ''}
             onChange={handlePersonalInfoChange}
             placeholder="Enter your email"
           />
@@ -248,7 +312,7 @@ const CV = () => {
           <input
             type="tel"
             name="phone"
-            value={cvData.personalInfo.phone}
+            value={cvData.personalInfo?.phone || ''}
             onChange={handlePersonalInfoChange}
             placeholder="Enter your phone number"
           />
@@ -258,7 +322,7 @@ const CV = () => {
           <input
             type="text"
             name="location"
-            value={cvData.personalInfo.location}
+            value={cvData.personalInfo?.location || ''}
             onChange={handlePersonalInfoChange}
             placeholder="Enter your city, country"
           />
@@ -282,7 +346,7 @@ const CV = () => {
       {/* Experience Section */}
       <section className="cv-section">
         <h2>Work Experience</h2>
-        {cvData.experience.map((exp) => (
+        {cvData.experience?.map((exp) => (
           <div key={exp.id} className="cv-entry">
             <div className="form-group">
               <label>Job Title</label>
@@ -370,7 +434,7 @@ const CV = () => {
       {/* Education Section */}
       <section className="cv-section">
         <h2>Education</h2>
-        {cvData.education.map((edu) => (
+        {cvData.education?.map((edu) => (
           <div key={edu.id} className="cv-entry">
             <div className="form-group">
               <label>Degree</label>
@@ -437,7 +501,7 @@ const CV = () => {
       {/* Skills Section */}
       <section className="cv-section">
         <h2>Skills</h2>
-        {cvData.skills.map((skill) => (
+        {cvData.skills?.map((skill) => (
           <div key={skill.id} className="cv-entry">
             <div className="form-row">
               <div className="form-group">
@@ -479,7 +543,7 @@ const CV = () => {
       {/* Certifications Section */}
       <section className="cv-section">
         <h2>Certifications</h2>
-        {cvData.certifications.map((cert) => (
+        {cvData.certifications?.map((cert) => (
           <div key={cert.id} className="cv-entry">
             <div className="form-group">
               <label>Certification Title</label>

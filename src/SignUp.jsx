@@ -10,6 +10,7 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    role: 'seeker', // Add role default
     agreeToTerms: false,
   });
   const [errors, setErrors] = useState({});
@@ -72,12 +73,12 @@ const SignUp = () => {
       setErrors(newErrors);
       return;
     }
-
+console.log(formData)
     setLoading(true);
 
     try {
-      await authService.register(formData.fullName, formData.email, formData.password);
-      navigate('/job-board');
+      await authService.register(formData.fullName, formData.email, formData.password, formData.role);
+      navigate('/jobs');
     } catch (error) {
       setErrors({ submit: error.message });
     } finally {
@@ -149,7 +150,20 @@ const SignUp = () => {
             />
             {errors.confirmPassword && <span className="field-error">{errors.confirmPassword}</span>}
           </div>
-
+            <div className="form-group">
+              <label htmlFor="role">I want to...</label>
+              <select
+                id="role"
+                name="role"
+                value={formData.role}
+                onChange={handleChange}
+                disabled={loading}
+                style={{ width: '100%', padding: '12px', marginTop: '5px', border: '1px solid #ddd', borderRadius: '4px' }}
+              >
+                <option value="seeker">Find a job (Job Seeker)</option>
+                <option value="employer">Hire talent (Employer)</option>
+              </select>
+            </div>
           <div className="form-group checkbox">
             <input
               type="checkbox"

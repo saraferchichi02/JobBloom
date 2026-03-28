@@ -18,6 +18,52 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please add a password'],
       minlength: 6,
     },
+    role: {
+      type: String,
+      enum: ['employer', 'seeker', 'admin'],
+      default: 'seeker',
+    },
+    cv: {
+      personalInfo: {
+        fullName: String,
+        email: String,
+        phone: String,
+        location: String,
+        profilePhoto: String,
+      },
+      summary: String,
+      experience: [
+        {
+          jobTitle: String,
+          company: String,
+          startDate: String,
+          endDate: String,
+          currentlyWorking: Boolean,
+          description: String,
+        },
+      ],
+      education: [
+        {
+          degree: String,
+          institution: String,
+          graduationDate: String,
+          gpa: String,
+        },
+      ],
+      skills: [
+        {
+          skill: String,
+          proficiency: String,
+        },
+      ],
+      certifications: [
+        {
+          title: String,
+          issuer: String,
+          dateObtained: String,
+        },
+      ],
+    },
   },
   { timestamps: true }
 );

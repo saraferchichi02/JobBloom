@@ -58,8 +58,38 @@ function JobBoard() {
     setFilteredJobs(filtered);
   }, [searchTerm, selectedCategory, jobs]);
 
-  const handleApplyJob = (jobId) => {
-    alert('Application submitted successfully!');
+  const handleApplyJob = async (jobId) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Please log in to apply.');
+        return;
+      }
+
+      // get user role
+      const userStr = localStorage.getItem('user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        if (user.role === 'employer') {
+          alert('Employers cannot apply for jobs. Please log in as a job seeker.');
+          return;
+        }
+      }
+
+      const response = await fetch(`http://localhost:5000/api/jobs/${jobId}/apply`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ coverLetter: 'My cover letter...' })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message || 'Failed to apply');
+      alert('Application submitted successfully!');
+    } catch(err) {
+      alert(err.message);
+    }
   };
 
   // Get unique companies

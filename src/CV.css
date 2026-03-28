@@ -2,104 +2,134 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  color: #1e293b;
 }
 
 .cv-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  border-bottom: 3px solid #007bff;
-  padding-bottom: 20px;
+  margin-bottom: 50px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #e2e8f0;
 }
 
 .cv-header h1 {
   margin: 0;
-  color: #333;
-  font-size: 2.5rem;
+  color: #0f172a;
+  font-size: 2.2rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .back-btn {
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
+  background-color: transparent;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-  margin-right: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  margin-right: 15px;
 }
 
 .back-btn:hover {
-  background-color: #5a6268;
+  background-color: #f8fafc;
+  color: #0f172a;
+  border-color: #94a3b8;
 }
 
 .download-btn {
-  background-color: #28a745;
+  background-color: #0ea5e9;
   color: white;
   border: none;
-  padding: 12px 24px;
-  border-radius: 5px;
+  padding: 12px 28px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(14, 165, 233, 0.2), 0 2px 4px -1px rgba(14, 165, 233, 0.1);
+  transition: all 0.3s ease;
 }
 
 .download-btn:hover {
-  background-color: #218838;
+  background-color: #0284c7;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3), 0 4px 6px -2px rgba(14, 165, 233, 0.15);
 }
 
 .cv-section {
-  margin-bottom: 40px;
-  background-color: #f8f9fa;
-  padding: 25px;
-  border-radius: 8px;
-  border-left: 5px solid #007bff;
+  margin-bottom: 45px;
+  background-color: white;
+  padding: 35px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f1f5f9;
 }
 
 .cv-section h2 {
-  color: #007bff;
+  color: #0f172a;
   margin-top: 0;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 10px;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.cv-section h2::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 24px;
+  background-color: #0ea5e9;
+  margin-right: 12px;
+  border-radius: 4px;
 }
 
 .cv-entry {
-  background-color: white;
-  padding: 20px;
+  background-color: #f8fafc;
+  padding: 25px;
   margin-bottom: 20px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
   position: relative;
+  transition: all 0.2s ease;
+}
+
+.cv-entry:hover {
+  border-color: #cbd5e1;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #333;
-  font-size: 0.95rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #475569;
+  font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
+  padding: 12px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.95rem;
   font-family: inherit;
-  transition: border-color 0.3s ease;
+  color: #1e293b;
+  background-color: white;
+  transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
@@ -107,78 +137,115 @@
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 80px;
+  min-height: 120px;
+  line-height: 1.5;
 }
 
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  gap: 20px;
 }
 
 .form-group.checkbox {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  margin-top: 10px;
 }
 
 .form-group.checkbox input {
-  width: auto;
-  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
   cursor: pointer;
+  accent-color: #0ea5e9;
 }
 
 .form-group.checkbox label {
   margin: 0;
   font-weight: 500;
+  color: #1e293b;
   cursor: pointer;
+  font-size: 0.95rem;
 }
 
 .add-btn,
 .remove-btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 0.95rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  margin-top: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .add-btn {
-  background-color: #007bff;
-  color: white;
+  background-color: #f1f5f9;
+  color: #0ea5e9;
   width: 100%;
-  margin-top: 15px;
+  margin-top: 10px;
+  border: 1px dashed #cbd5e1;
+  padding: 15px;
 }
 
 .add-btn:hover {
-  background-color: #0056b3;
+  background-color: #e0f2fe;
+  border-color: #0ea5e9;
+  color: #0284c7;
 }
 
 .remove-btn {
-  background-color: #dc3545;
-  color: white;
+  background-color: #fee2e2;
+  color: #ef4444;
   padding: 8px 16px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  margin-top: 15px;
+  align-self: flex-start;
 }
 
 .remove-btn:hover {
-  background-color: #c82333;
+  background-color: #fca5a5;
+  color: #b91c1c;
+}
+
+.success-message {
+  background-color: #dcfce7;
+  color: #166534;
+  padding: 12px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid #bbf7d0;
 }
 
 @media (max-width: 768px) {
   .cv-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 15px;
+    gap: 20px;
+  }
+
+  .cv-header-actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
   }
 
   .cv-header h1 {
@@ -187,14 +254,16 @@
 
   .form-row {
     grid-template-columns: 1fr;
+    gap: 0;
   }
 
   .cv-container {
-    padding: 20px 10px;
+    padding: 20px 15px;
   }
 
   .cv-section {
-    padding: 15px;
+    padding: 20px;
+    border-radius: 12px;
   }
 
   .cv-entry {
